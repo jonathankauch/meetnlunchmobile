@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">MeetnLunch</string>
+    <string name="title_activity_search">Map</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="name_field">Name</string>
+    <string name="confirm_field">Confirm Password</string>
+    <string name="age_field">Age</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_none">Both</string>
+    <string name="distance_field">Range (km)</string>
+    <string name="food_type_field">Type of Food</string>
+    <string name="gender_field">Gender</string>
+    <string name="visibility_filter">Only visible for:</string>
+    <string name="avatar">Profile picture</string>
+    <string name="event_creation">Create an event</string>
+    <string name="show_name_info">Show Name</string>
+    <string name="show_gender_info">Show Gender</string>
+    <string name="show_age_info">Show Age</string>
+    <string name="Description_info">Description</string>
+    <string name="contact_info">Contact Information</string>
+
+    <string name="action_sign_in">Connexion</string>
+    <string name="action_sign_up">Register</string>
+    <string name="action_send">Send Password</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_back">Back</string>
+    <string name="action_menu_profile">Profile</string>
+    <string name="action_menu_search">Search</string>
+    <string name="action_menu_filter">Filters</string>
+    <string name="action_forgot_password">Forgot Password ?</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_register">Sign Up</string>
+    <string name="title_activity_forgot">"Have you forgot your password ? "</string>
+    <string name="title_activity_filter">Filter</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="foodType">
+        <item>Korean</item>
+        <item>Mexican</item>
+        <item>Japanese</item>
+        <item>Chinese</item>
+        <item>French</item>
+        <item>Vietnamese</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Seafood</item>
+    </string-array>
+</resources>

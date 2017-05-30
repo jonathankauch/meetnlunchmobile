@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.herokuapp.meetnlunch.meetnlunch.Filter">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="287dp"
+        android:layout_weight="0.10">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_menu_filter"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="36sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/age_field"
+                android:layout_gravity="center_horizontal"/>
+            <SeekBar
+                android:id="@+id/filter_age"
+                android:layout_width="200dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/food_type_field"
+                android:layout_gravity="center_horizontal"/>
+            <Spinner
+                android:id="@+id/filter_food"
+                android:layout_width="200dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:entries="@array/foodType"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance_field"
+                android:layout_gravity="center_horizontal"/>
+            <SeekBar
+                android:id="@+id/filter_range"
+                android:layout_width="200dp"
+                android:layout_marginBottom="20dp"
+
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_field"
+                android:layout_gravity="center_horizontal"/>
+
+            <RadioButton
+                android:id="@+id/male_gender_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_male" />
+
+            <RadioButton
+                android:id="@+id/female_gender_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_female" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/visibility_filter"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="36sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/age_field"
+                android:layout_gravity="center_horizontal"/>
+            <SeekBar
+                android:id="@+id/filter_age_visibility"
+                android:layout_width="200dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_field"
+                android:layout_gravity="center_horizontal"/>
+
+            <RadioButton
+                android:id="@+id/male_gender_visibility_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_male" />
+
+            <RadioButton
+                android:id="@+id/female_gender_visibility_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_female" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation" />
+
+</LinearLayout>
