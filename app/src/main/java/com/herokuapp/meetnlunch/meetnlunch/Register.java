@@ -3,6 +3,7 @@ package com.herokuapp.meetnlunch.meetnlunch;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -92,6 +93,16 @@ public class Register extends AppCompatActivity implements LoaderCallbacks<Curso
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        Button mLogin = (Button) findViewById(R.id.forgot_password_button);
+        mLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View mLoginFormView) {
+                Intent iLogin = new Intent(Register.this, Login.class);
+                startActivity(iLogin);
+            }
+        });
     }
 
     private void populateAutoComplete() {

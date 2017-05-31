@@ -34,13 +34,33 @@
                 android:layout_height="wrap_content"
                 android:text="@string/age_field"
                 android:layout_gravity="center_horizontal"/>
-            <SeekBar
-                android:id="@+id/filter_age"
-                android:layout_width="200dp"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                />
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age_min"/>
+
+                <SeekBar
+                    android:id="@+id/filter_age"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:max="99"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age_max"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,14 +81,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/distance_field"
                 android:layout_gravity="center_horizontal"/>
-            <SeekBar
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance_min"/>
+
+        <SeekBar
                 android:id="@+id/filter_range"
                 android:layout_width="200dp"
                 android:layout_marginBottom="20dp"
-
-                android:layout_height="match_parent"
+                android:max="10"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance_max"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,13 +144,33 @@
                 android:layout_height="wrap_content"
                 android:text="@string/age_field"
                 android:layout_gravity="center_horizontal"/>
-            <SeekBar
-                android:id="@+id/filter_age_visibility"
-                android:layout_width="200dp"
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                />
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age_min"/>
+
+                <SeekBar
+                    android:id="@+id/filter_age_visibility"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:max="99"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age_max"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

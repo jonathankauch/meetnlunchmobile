@@ -68,11 +68,18 @@
                 android:layout_width="178dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_margin="50dp"
                 android:layout_gravity="center"
                 android:text="@string/action_send"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/back_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:text="@string/action_back"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
     </ScrollView>

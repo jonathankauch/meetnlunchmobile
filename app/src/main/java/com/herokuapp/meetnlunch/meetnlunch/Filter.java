@@ -1,5 +1,6 @@
 package com.herokuapp.meetnlunch.meetnlunch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,22 +10,21 @@ import android.widget.TextView;
 
 public class Filter extends AppCompatActivity {
 
-    private TextView mTextMessage;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.action_menu_filter);
+                case R.id.navigation_filters:
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.action_menu_search);
+                case R.id.navigation_search:
+                    Intent iSearchView =  new Intent(Filter.this, Search.class);
+                    startActivity(iSearchView);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.action_menu_profile);
+                case R.id.navigation_profile:
+                    Intent iProfileView =  new Intent(Filter.this, Profile.class);
+                    startActivity(iProfileView);
                     return true;
             }
             return false;

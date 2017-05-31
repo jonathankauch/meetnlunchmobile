@@ -3,6 +3,7 @@ package com.herokuapp.meetnlunch.meetnlunch;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -75,6 +76,8 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    Intent iForgotPass = new Intent(Login.this, Search.class);
+                    startActivity(iForgotPass);
                     attemptLogin();
                     return true;
                 }
@@ -92,6 +95,26 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        Button mForgotPass = (Button) findViewById(R.id.forgot_password_button);
+        mForgotPass.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View mLoginFormView) {
+                Intent iForgotPass = new Intent(Login.this, Forgot.class);
+                startActivity(iForgotPass);
+            }
+        });
+
+        Button mregister = (Button) findViewById(R.id.email_sign_up_button);
+        mregister.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View mLoginFormView) {
+                Intent iForgotPass = new Intent(Login.this, Register.class);
+                startActivity(iForgotPass);
+            }
+        });
     }
 
     private void populateAutoComplete() {

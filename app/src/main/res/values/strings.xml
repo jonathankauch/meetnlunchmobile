@@ -24,6 +24,11 @@
     <string name="Description_info">Description</string>
     <string name="contact_info">Contact Information</string>
 
+    <string name="age_min">0</string>
+    <string name="age_max">99+</string>
+    <string name="distance_min">0</string>
+    <string name="distance_max">10</string>
+
     <string name="action_sign_in">Connexion</string>
     <string name="action_sign_up">Register</string>
     <string name="action_send">Send Password</string>
