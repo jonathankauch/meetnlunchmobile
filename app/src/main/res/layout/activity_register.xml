@@ -115,17 +115,35 @@
                 android:ems="10"
                 android:inputType="number" />
 
-            <RadioButton
-                android:id="@+id/male_gender_register"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gender_male" />
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-            <RadioButton
-                android:id="@+id/female_gender_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gender_female" />
+                <RadioGroup
+                    android:id="@+id/gender_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/male_gender_register"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/gender_male" />
+
+                    <RadioButton
+                        android:id="@+id/female_gender_register"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender_female" />
+
+                </RadioGroup>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/email_sign_in_button"

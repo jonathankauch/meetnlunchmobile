@@ -38,8 +38,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
                 android:layout_gravity="center">
 
                 <TextView
@@ -61,6 +61,14 @@
                     android:text="@string/age_max"/>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/age_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +93,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
@@ -98,7 +105,7 @@
         <SeekBar
                 android:id="@+id/filter_range"
                 android:layout_width="200dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
                 android:max="10"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -114,20 +121,53 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/range_value"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/gender_field"
                 android:layout_gravity="center_horizontal"/>
 
-            <RadioButton
-                android:id="@+id/male_gender_filter"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gender_male" />
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-            <RadioButton
-                android:id="@+id/female_gender_filter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gender_female" />
+                <RadioGroup
+                    android:id="@+id/gender_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/male_gender_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/gender_male" />
+
+                    <RadioButton
+                        android:id="@+id/female_gender_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/gender_female" />
+
+                    <RadioButton
+                        android:id="@+id/both_gender_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender_none" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,7 +188,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center">
 
@@ -173,22 +213,64 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/age_visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gender_field"
                 android:layout_gravity="center_horizontal"/>
 
-            <RadioButton
-                android:id="@+id/male_gender_visibility_filter"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gender_male" />
+                android:orientation="horizontal"
+                android:layout_gravity="center">
 
-            <RadioButton
-                android:id="@+id/female_gender_visibility_filter"
-                android:layout_width="match_parent"
+                    <RadioGroup
+                        android:id="@+id/gender_visibility"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/male_gender_visibility"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/gender_male" />
+
+                        <RadioButton
+                            android:id="@+id/female_gender_visibility"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            android:text="@string/gender_female" />
+
+                        <RadioButton
+                            android:id="@+id/both_gender_visibility"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gender_none" />
+
+                     </RadioGroup>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/save_change_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="178dp"
                 android:layout_height="wrap_content"
-                android:text="@string/gender_female" />
+                android:layout_marginTop="22dp"
+                android:text="@string/action_save_changes"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

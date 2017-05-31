@@ -17,7 +17,7 @@
     <string name="gender_field">Gender</string>
     <string name="visibility_filter">Only visible for:</string>
     <string name="avatar">Profile picture</string>
-    <string name="event_creation">Create an event</string>
+    <string name="event_creation">Search</string>
     <string name="show_name_info">Show Name</string>
     <string name="show_gender_info">Show Gender</string>
     <string name="show_age_info">Show Age</string>
@@ -38,6 +38,7 @@
     <string name="action_menu_search">Search</string>
     <string name="action_menu_filter">Filters</string>
     <string name="action_forgot_password">Forgot Password ?</string>
+    <string name="action_save_changes">Save</string>
 
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

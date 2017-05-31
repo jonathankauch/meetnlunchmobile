@@ -37,7 +37,11 @@
         <activity
             android:name=".Search"
             android:label="@string/title_activity_search">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Login"
@@ -58,11 +62,6 @@
         <activity
             android:name=".Profile"
             android:label="@string/action_menu_profile">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
