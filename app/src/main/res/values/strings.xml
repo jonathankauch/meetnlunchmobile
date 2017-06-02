@@ -55,4 +55,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="api_url">https://meetnlunchapp.herokuapp.com/api/</string>
+    <string name="login_url">https://meetnlunchapp.herokuapp.com/login</string>
+    <string name="register_url">https://meetnlunchapp.herokuapp.com/register</string>
 </resources>

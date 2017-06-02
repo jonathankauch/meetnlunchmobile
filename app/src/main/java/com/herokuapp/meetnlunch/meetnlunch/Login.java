@@ -89,7 +89,9 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                Intent searchIntent = new Intent(Login.this, Search.class);
+                startActivity(searchIntent);
+//                attemptLogin();
             }
         });
 
@@ -279,13 +281,15 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                emails.add(cursor.getString(ProfileQuery.ADDRESS));
+                cursor.moveToNext();
+            }
 
-        addEmailsToAutoComplete(emails);
+            addEmailsToAutoComplete(emails);
+        }
     }
 
     @Override
