@@ -5,11 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.BundleCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -96,13 +98,18 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             }
         });
 
+        SharedPreferences prefs = getSharedPreferences("credentials", MODE_PRIVATE);
+
+        mEmailView.setText(prefs.getString("username", ""));
+        mPasswordView.setText(prefs.getString("password", ""));
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent searchIntent = new Intent(Login.this, Search.class);
-                startActivity(searchIntent);
-//                attemptLogin();
+//                Intent searchIntent = new Intent(Login.this, Search.class);
+//                startActivity(searchIntent);
+                attemptLogin();
             }
         });
 
@@ -207,10 +214,6 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -236,10 +239,19 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
     }
 
 
-    private void connect(String email, String password) {
+    private void connect(String username, String password) {
         final JsonObject json = new JsonObject();
-        json.addProperty("email", email);
+        json.addProperty("username", username);
         json.addProperty("password", password);
+
+        Log.d("JSON OBJECT", json.toString());
+
+        SharedPreferences.Editor editor = getSharedPreferences("credentials", MODE_PRIVATE).edit();
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.commit();
+
+
 
         if (!isNetworkAvailable()) {
             showProgress(false);
@@ -256,17 +268,22 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                     public void onCompleted(Exception e, JsonObject result) {
                         showProgress(false);
                         if (e != null || result == null) {
+                            Log.d("ERROR RESPONSE", e.getMessage());
                             return;
                         }
                         Log.d("API RESPONSE", result.toString());
-                                JsonElement jsonUser = result.get("user");
-                                User user = new Gson().fromJson(jsonUser, User.class);
-                                if (user != null) {
-                                    Singleton.getInstance(user.getToken(), user.getId());
-                                    Singleton.getInstance().setmUser(user);
-                                    Intent intent = new Intent(Login.this, Search.class);
-                                    startActivity(intent);
-                                }
+                        JsonElement jsonUser = result.get("user");
+                        if (jsonUser != null) {
+                            Intent intent = new Intent(Login.this, Search.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Login.this, "Bad credentials", Toast.LENGTH_LONG).show();
+                        }
+//                        User user = new Gson().fromJson(jsonUser, User.class);
+//                        if (user != null) {
+//                            Singleton.getInstance(user.getToken(), user.getId());
+//                            Singleton.getInstance().setmUser(user);
+//                        }
                     }
                 });
 

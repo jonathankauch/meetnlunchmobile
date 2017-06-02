@@ -53,7 +53,6 @@ public class Profile extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         ((Switch) findViewById(R.id.event_on)).setChecked(event);
-        ((Switch) findViewById(R.id.show_name)).setChecked(showName);
         ((Switch) findViewById(R.id.show_age)).setChecked(showAge);
         ((Switch) findViewById(R.id.show_gender)).setChecked(showGender);
         ((EditText) findViewById(R.id.description_field)).setText(description);
@@ -66,7 +65,6 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View mLoginFormView) {
                 getEventCreation();
-                getShowName();
                 getShowGender();
                 getShowAge();
                 getAvatar();
@@ -79,11 +77,6 @@ public class Profile extends AppCompatActivity {
     public void getEventCreation() {
         Switch bar = (Switch) findViewById(R.id.event_on);
         event = bar.isChecked();
-    }
-
-    public void getShowName() {
-        Switch bar = (Switch) findViewById(R.id.show_name);
-        showName = bar.isChecked();
     }
 
     public void getShowGender() {

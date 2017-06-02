@@ -8,14 +8,6 @@
     android:orientation="vertical"
     tools:context="com.herokuapp.meetnlunch.meetnlunch.Profile">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="287dp"
@@ -128,5 +120,13 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation" />
 
 </LinearLayout>
