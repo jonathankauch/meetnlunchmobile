@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
                 final JsonObject json = new JsonObject();
                 json.addProperty("email", getEmailText());
                 json.addProperty("password", getPasswordText());
-                json.addProperty("name", getNameText());
+                json.addProperty("username", getNameText());
 
                 if (!isNetworkAvailable()) {
 
@@ -64,6 +64,7 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onCompleted(Exception e, JsonObject result) {
                                 if (e != null || result == null) {
+                                    Log.d("ERROR RESPONSE", e.getMessage());
                                     return;
                                 }
                                 Log.d("API RESPONSE", result.toString());

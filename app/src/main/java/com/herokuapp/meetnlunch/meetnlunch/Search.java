@@ -91,7 +91,6 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         mMap.setMyLocationEnabled(true);
 
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Jonathana, 22 years old, F").snippet("Korean Restaurant"));
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
@@ -101,9 +100,10 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
+            mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Jonathana, 22 years old, F").snippet("Korean Restaurant"));
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                    .zoom(17)                   // Sets the zoom
+                    .zoom(16)                   // Sets the zoom
                     .build();                   // Creates a CameraPosition from the builder
 //                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
