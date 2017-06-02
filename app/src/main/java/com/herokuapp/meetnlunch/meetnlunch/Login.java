@@ -3,8 +3,11 @@ package com.herokuapp.meetnlunch.meetnlunch;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +33,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -210,9 +221,55 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            connect(email, password);
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+    private void connect(String email, String password) {
+        final JsonObject json = new JsonObject();
+        json.addProperty("email", email);
+        json.addProperty("password", password);
+
+        if (!isNetworkAvailable()) {
+            showProgress(false);
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Ion.with(getApplicationContext())
+                .load(getString(R.string.api_url) + "login")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        showProgress(false);
+                        if (e != null || result == null) {
+                            return;
+                        }
+                        Log.d("API RESPONSE", result.toString());
+                                JsonElement jsonUser = result.get("user");
+                                User user = new Gson().fromJson(jsonUser, User.class);
+                                if (user != null) {
+                                    Singleton.getInstance(user.getToken(), user.getId());
+                                    Singleton.getInstance().setmUser(user);
+                                    Intent intent = new Intent(Login.this, Search.class);
+                                    startActivity(intent);
+                                }
+                    }
+                });
+
     }
 
     private boolean isEmailValid(String email) {

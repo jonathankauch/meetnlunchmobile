@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -49,9 +50,11 @@ public class Register extends AppCompatActivity {
                 json.addProperty("password", getPasswordText());
                 json.addProperty("name", getNameText());
 
-                if (!isNetworkAvailable())
+                if (!isNetworkAvailable()) {
+
+                    Toast.makeText(Register.this, "No internet connection", Toast.LENGTH_LONG).show();
                     return;
-//                showProgress(true);
+                }
 
                 Ion.with(getApplicationContext())
                         .load(getString(R.string.api_url) + "register")
@@ -64,24 +67,9 @@ public class Register extends AppCompatActivity {
                                     return;
                                 }
                                 Log.d("API RESPONSE", result.toString());
-//                                JsonElement jsonUser = result.get("user");
-//                                getUser(jsonUser.getAsJsonObject());
-//                                User user = new Gson().fromJson(jsonUser, User.class);
-//                                if (user != null) {
-//                                    Log.d("USER PARSED", "email : " + user.getEmail());
-//                                    Log.d("USER PARSED", "firstname : " + user.getFirstname());
-//                                    Log.d("USER PARSED", "lastname : " + user.getLastname());
-//                                    Log.d("USER PARSED", "token : " + user.getToken());
-//                                    Log.d("USER PARSED", "id : " + user.getId());
-//                                    Singleton.getInstance(user.getToken(), user.getId());
-//                                    Singleton.getInstance().setmUser(user);
-//                                    Intent intent = new Intent(LoginActivity.this, LeftMenuActivity.class);
-//                                    startActivity(intent);
-//                                }
                             }
                         });
 
-                String API_URL="https://meetnlunchapp.herokuapp.com/api/register?email=" + getEmailText() +"&password=" + getPasswordText() + "&name=" + getNameText();
             }
         });
     }

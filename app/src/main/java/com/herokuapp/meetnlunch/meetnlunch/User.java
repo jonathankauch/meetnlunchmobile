@@ -5,27 +5,18 @@ package com.herokuapp.meetnlunch.meetnlunch;
  * Created by Shirco on 24/02/2016.
  */
 public class User {
-    private String firstname;
-    private String lastname;
+    private String name;
     private String authentication_token;
     private String logged_at;
     private String email;
     private String id;
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getToken() {
