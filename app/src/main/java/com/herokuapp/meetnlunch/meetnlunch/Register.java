@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,12 @@ public class Register extends AppCompatActivity {
                 json.addProperty("email", getEmailText());
                 json.addProperty("password", getPasswordText());
                 json.addProperty("username", getNameText());
+                String ageStr = getAgeText();
+                if (ageStr.length() > 0) {
+                    int age = Integer.parseInt(ageStr);
+                    json.addProperty("age", age);
+                }
+                json.addProperty("gender", getGender());
 
                 if (!isNetworkAvailable()) {
 
@@ -90,12 +98,26 @@ public class Register extends AppCompatActivity {
     public String getEmailText() {
         return ((AutoCompleteTextView) findViewById(R.id.email)).getText().toString();
     }
+
     public String getPasswordText() {
         return ((AutoCompleteTextView) findViewById(R.id.password)).getText().toString();
     }
     public String getNameText() {
         return ((AutoCompleteTextView) findViewById(R.id.name)).getText().toString();
     }
+
+    public String getAgeText() {
+        return ((EditText) findViewById(R.id.ageTextView)).getText().toString();
+    }
+
+    public String getGender() {
+        if (((RadioButton) findViewById(R.id.male_gender_register)).isChecked()) {
+            return "M";
+        } else {
+            return "F";
+        }
+    }
+
 
     public TextView getResponse() {
         return (TextView) findViewById(R.id.RESPONSE);

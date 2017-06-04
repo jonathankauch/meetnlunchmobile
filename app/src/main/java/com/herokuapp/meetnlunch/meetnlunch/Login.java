@@ -243,6 +243,8 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         final JsonObject json = new JsonObject();
         json.addProperty("username", username);
         json.addProperty("password", password);
+        json.addProperty("client_id", "6_1qo0nbo7qwu84kc0ow0sc8wsgwgwo484ck040s0w8ck0ckcsok");
+        json.addProperty("client_secret", "26ax9kvwtbusgcskgkocosoc844k0g404wo8kg40sgg808kwc4");
 
         Log.d("JSON OBJECT", json.toString());
 
