@@ -144,8 +144,8 @@ public class Forgot extends AppCompatActivity {
                                 ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.password_RESET);
                                 ((AutoCompleteTextView) findViewById(R.id.new_pass)).setVisibility(View.GONE);
                                 ((Button) findViewById(R.id.set_new_pass)).setVisibility(View.GONE);
-                                ((AutoCompleteTextView) findViewById(R.id.user_text)).setVisibility(View.VISIBLE);
-                                ((Button) findViewById(R.id.send_mail_button)).setVisibility(View.VISIBLE);
+                                ((TextInputLayout) findViewById(R.id.pass_text_layout)).setVisibility(View.GONE);
+
                             }
                         });
             }
