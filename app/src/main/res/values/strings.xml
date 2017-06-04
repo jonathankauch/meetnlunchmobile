@@ -50,9 +50,16 @@
     <string name="confirm_password">Password and Confirm does not match</string>
     <string name="register_success">Registration Complete !</string>
     <string name="register_fail">Registration Fail !</string>
+    <string name="username_NOEXIST">No such user exist !</string>
+    <string name="username_EXIT">Email sent !</string>
+    <string name="code_INVALID">Code Invalid !</string>
+    <string name="code_VALID">Code Accepted !</string>
+    <string name="password_FAIL">Something went wrong..! </string>
+    <string name="password_RESET">Password successfuly updated !</string>
     <string name="title_activity_register">Sign Up</string>
     <string name="title_activity_forgot">"Have you forgot your password ? "</string>
     <string name="title_activity_filter">Filter</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
