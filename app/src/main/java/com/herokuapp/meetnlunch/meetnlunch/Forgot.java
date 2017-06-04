@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class Forgot extends AppCompatActivity {
             public void onClick(View mLoginFormView) {
                 final JsonObject json = new JsonObject();
                 json.addProperty("username", getUserText());
+                Toast.makeText(Forgot.this, getUserText(), Toast.LENGTH_LONG).show();
 
                 if (!isNetworkAvailable()) {
 
@@ -65,6 +67,7 @@ public class Forgot extends AppCompatActivity {
                                 ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.username_EXIT);
                                 ((AutoCompleteTextView) findViewById(R.id.user_text)).setVisibility(View.GONE);
                                 ((Button) findViewById(R.id.send_mail_button)).setVisibility(View.GONE);
+                                ((TextInputLayout) findViewById(R.id.user_text_layout)).setVisibility(View.GONE);
                                 ((AutoCompleteTextView) findViewById(R.id.code_field)).setVisibility(View.VISIBLE);
                                 ((Button) findViewById(R.id.check_code_button)).setVisibility(View.VISIBLE);
                             }
@@ -78,7 +81,7 @@ public class Forgot extends AppCompatActivity {
             @Override
             public void onClick(View mLoginFormView) {
                 final JsonObject json = new JsonObject();
-                json.addProperty("token", getUserText());
+                json.addProperty("token", getTokenText());
 
                 if (!isNetworkAvailable()) {
 
@@ -102,6 +105,7 @@ public class Forgot extends AppCompatActivity {
                                 ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.code_VALID);
                                 ((AutoCompleteTextView) findViewById(R.id.code_field)).setVisibility(View.GONE);
                                 ((Button) findViewById(R.id.check_code_button)).setVisibility(View.GONE);
+                                ((TextInputLayout) findViewById(R.id.token_text_layout)).setVisibility(View.GONE);
                                 ((AutoCompleteTextView) findViewById(R.id.new_pass)).setVisibility(View.VISIBLE);
                                 ((Button) findViewById(R.id.set_new_pass)).setVisibility(View.VISIBLE);
                             }
@@ -115,7 +119,8 @@ public class Forgot extends AppCompatActivity {
             @Override
             public void onClick(View mLoginFormView) {
                 final JsonObject json = new JsonObject();
-                json.addProperty("password", getUserText());
+                json.addProperty("password", getPasswordText());
+                json.addProperty("username", getUserText());
 
                 if (!isNetworkAvailable()) {
 
@@ -156,6 +161,14 @@ public class Forgot extends AppCompatActivity {
 
     public String getUserText() {
         return ((AutoCompleteTextView) findViewById(R.id.user_text)).getText().toString();
+    }
+
+    public String getTokenText() {
+        return ((AutoCompleteTextView) findViewById(R.id.code_field)).getText().toString();
+    }
+
+    public String getPasswordText() {
+        return ((AutoCompleteTextView) findViewById(R.id.new_pass)).getText().toString();
     }
 }
 

@@ -23,6 +23,7 @@
     <string name="show_age_info">Show Age</string>
     <string name="Description_info">Description</string>
     <string name="contact_info">Contact Information</string>
+    <string name="token">Token</string>
 
     <string name="age_min">0</string>
     <string name="age_max">99+</string>

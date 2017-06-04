@@ -56,6 +56,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@+id/user_text_layout"
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
@@ -82,6 +83,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@+id/token_text_layout"
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
@@ -89,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/token"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:visibility="gone"
@@ -117,7 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/prompt_password"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:visibility="gone"
