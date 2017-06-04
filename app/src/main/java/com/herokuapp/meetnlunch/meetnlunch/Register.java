@@ -47,6 +47,7 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onClick(View mLoginFormView) {
+                getProgressBar().setVisibility(View.VISIBLE);
                 final JsonObject json = new JsonObject();
                 json.addProperty("email", getEmailText());
                 json.addProperty("password", getPasswordText());
@@ -71,6 +72,7 @@ public class Register extends AppCompatActivity {
                         .setCallback(new FutureCallback<JsonObject>() {
                             @Override
                             public void onCompleted(Exception e, JsonObject result) {
+                                getProgressBar().setVisibility(View.GONE);
                                 if (e != null || result == null) {
                                     ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.register_fail);
                                     Log.d("ERROR RESPONSE", e.getMessage());
