@@ -72,13 +72,16 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onCompleted(Exception e, JsonObject result) {
                                 if (e != null || result == null) {
+                                    ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.register_fail);
                                     Log.d("ERROR RESPONSE", e.getMessage());
                                     return;
                                 }
                                 Log.d("API RESPONSE", result.toString());
+                                ((TextView) findViewById(R.id.RESPONSE)).setText(R.string.register_success);
+                                Intent iLogin = new Intent(Register.this, Login.class);
+                                startActivity(iLogin);
                             }
                         });
-
             }
         });
     }
@@ -117,11 +120,5 @@ public class Register extends AppCompatActivity {
             return "F";
         }
     }
-
-
-    public TextView getResponse() {
-        return (TextView) findViewById(R.id.RESPONSE);
-    }
-
 }
 

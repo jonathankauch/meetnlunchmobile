@@ -47,6 +47,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="confirm_password">Password and Confirm does not match</string>
+    <string name="register_success">Registration Complete !</string>
+    <string name="register_fail">Registration Fail !</string>
     <string name="title_activity_register">Sign Up</string>
     <string name="title_activity_forgot">"Have you forgot your password ? "</string>
     <string name="title_activity_filter">Filter</string>
