@@ -243,8 +243,6 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         final JsonObject json = new JsonObject();
         json.addProperty("username", username);
         json.addProperty("password", password);
-        json.addProperty("client_id", "6_1qo0nbo7qwu84kc0ow0sc8wsgwgwo484ck040s0w8ck0ckcsok");
-        json.addProperty("client_secret", "26ax9kvwtbusgcskgkocosoc844k0g404wo8kg40sgg808kwc4");
 
         Log.d("JSON OBJECT", json.toString());
 
@@ -262,7 +260,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         }
 
         Ion.with(getApplicationContext())
-                .load(getString(R.string.api_url) + "login")
+                .load("https://meetnlunchapp.herokuapp.com/app_dev.php/api/login?client_id=6_1qo0nbo7qwu84kc0ow0sc8wsgwgwo484ck040s0w8ck0ckcsok&client_secret=26ax9kvwtbusgcskgkocosoc844k0g404wo8kg40sgg808kwc4")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -274,8 +272,8 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                             return;
                         }
                         Log.d("API RESPONSE", result.toString());
-                        JsonElement jsonUser = result.get("user");
-                        if (jsonUser != null) {
+                        JsonElement token = result.get("access_token");
+                        if (token != null) {
                             Intent intent = new Intent(Login.this, Search.class);
                             startActivity(intent);
                         } else {
