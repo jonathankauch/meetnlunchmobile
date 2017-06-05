@@ -267,6 +267,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                         Log.d("API RESPONSE", result.toString());
                         JsonElement token = result.get("access_token");
                         if (token != null) {
+                            Singleton.getInstance().setToken(token.getAsString());
                             Intent intent = new Intent(Login.this, Search.class);
                             startActivity(intent);
                         } else {
