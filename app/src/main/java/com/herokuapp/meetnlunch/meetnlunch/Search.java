@@ -7,14 +7,21 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +32,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 public class Search extends FragmentActivity implements OnMapReadyCallback {
 
@@ -109,6 +119,41 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
+        final JsonObject json = new JsonObject();
+        json.addProperty("Authorization", "Bearer[" + Singleton.getInstance().getToken() + "]");
+        json.addProperty("food_id", 1);
+        json.addProperty("wanted_age", 20);
+        json.addProperty("wanted_gender", "M");
+        json.addProperty("range", 5);
+        json.addProperty("visible_age", 25);
+        json.addProperty("visible_gender", "M");
+        json.addProperty("customer_id", 1);
+        json.addProperty("position", "" + location.getLatitude() + "," + location.getLongitude());
+
+        Log.d("JSON OBJECT", json.toString());
+
+        if (!isNetworkAvailable()) {
+
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Ion.with(getApplicationContext())
+                .load(getString(R.string.api_url) + "filter")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        if (e != null || result == null) {
+                            Log.d("ERROR RESPONSE", e.getMessage());
+                            return;
+                        }
+                        Log.d("API RESPONSE", result.toString());
+                    }
+                });
+
+
         // Add a marker in Sydney and move the camera
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -141,5 +186,13 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         }
 
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 }
