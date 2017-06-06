@@ -17,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.async.http.BasicNameValuePair;
 import com.koushikdutta.ion.Ion;
 
 public class Profile extends AppCompatActivity {
@@ -78,13 +81,10 @@ public class Profile extends AppCompatActivity {
                 getDescription();
                 getContact();
                 final JsonObject json = new JsonObject();
-                json.addProperty("visibility", event);
-                json.addProperty("visibleAge", showAge);
-                json.addProperty("visibleGender", showGender);
+                json.addProperty("isVisible", event);
+                json.addProperty("showAge", showAge);
                 json.addProperty("description", description);
                 json.addProperty("contact", contact);
-                json.addProperty("position", "tmp");
-
 
                 if (!isNetworkAvailable()) {
 
@@ -92,18 +92,32 @@ public class Profile extends AppCompatActivity {
                     return;
                 }
 
+                BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
+
+
                 Ion.with(getApplicationContext())
-                        .load(getString(R.string.api_url) + "forgot/reset")
+                        .load("PUT", getString(R.string.api_url) + "users/" + Singleton.getInstance().getmUser().getId())
+                        .setHeader(tokenPair)
                         .setJsonObjectBody(json)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
                             @Override
                             public void onCompleted(Exception e, JsonObject result) {
                                 if (e != null || result == null) {
-                                    Log.d("ERROR RESPONSE", e.getMessage());
+                                    Log.d("ERROR RESPONSE", e.toString());
                                     return;
                                 }
+
                                 Log.d("API RESPONSE", result.toString());
+
+                                JsonElement jsonUser = result.get("user");
+                                User user = new Gson().fromJson(jsonUser, User.class);
+
+                                if (user != null) {
+
+                                    Singleton.getInstance().setmUser(user);
+                                }
+
                             }
                         });
             }
