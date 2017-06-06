@@ -7,6 +7,7 @@ package com.herokuapp.meetnlunch.meetnlunch;
 public class User {
     private String name;
     private String email;
+    private int avatar;
     private int id;
     private int food;
     private int wantedAge;
@@ -24,6 +25,14 @@ public class User {
     private String contact;
     private float latitude;
     private float longitude;
+
+    public int getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
+    }
 
     public int getFood() {
         return food;
