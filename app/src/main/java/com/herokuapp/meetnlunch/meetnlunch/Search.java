@@ -39,11 +39,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.plus.Plus;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.BasicNameValuePair;
 import com.koushikdutta.ion.Ion;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -54,6 +58,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private LocationListener mLocationListener;
+    private ArrayList<Integer> existingIds;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,6 +85,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        existingIds = new ArrayList<>();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -131,7 +137,6 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                 if (!isReady) {
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Jonathana, 22 years old, F").snippet("Korean Restaurant"));
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
                             .zoom(16)                   // Sets the zoom
@@ -157,10 +162,11 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                 url += "&latitude=" + location.getLatitude() + "&longitude=" + location.getLongitude();
 
                 Log.d("URL", url);
+                String url2 = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/users";
                 BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
 
                 Ion.with(getApplicationContext())
-                        .load(url)
+                        .load(url2)
                         .setHeader(tokenPair)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
@@ -171,6 +177,30 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                                     return;
                                 }
                                 Log.d("API RESPONSE", result.toString());
+
+                                JsonElement jsonCustomers = result.get("customers");
+                                User[] users = new Gson().fromJson(jsonCustomers, User[].class);
+                                for (int i = 0; i < users.length; i++) {
+                                    if (users[i].getLatitude() != 0) {
+                                        if (!checkIfExist(users[i].getId())) {
+                                            String name = "";
+                                            if (users[i].getName() != null) {
+                                                name = users[i].getName();
+                                            }
+
+                                            int age = users[i].getAge();
+
+                                            String gender = "";
+                                            if (users[i].getGender() != null) {
+                                                gender = users[i].getGender();
+                                            }
+
+                                            String title = name + ", " + age + " years old" + ", " + gender;
+
+                                            mMap.addMarker(new MarkerOptions().position(new LatLng(users[i].getLatitude(), users[i].getLongitude())).title(title).snippet("Korean Restaurant"));
+                                        }
+                                    }
+                                }
                             }
                         });
 
@@ -179,8 +209,8 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
 
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(100);
-        mLocationRequest.setFastestInterval(100);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(10000);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -191,6 +221,18 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
         mGoogleApiClient.connect();
         Criteria criteria = new Criteria();
 
+    }
+
+    private boolean checkIfExist(int id) {
+        if (id == Singleton.getInstance().getmUser().getId()) {
+            return true;
+        }
+        for (Integer existingId: existingIds) {
+            if (id == existingId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

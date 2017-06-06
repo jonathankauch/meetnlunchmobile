@@ -22,6 +22,40 @@ public class User {
     private boolean showAge;
     private boolean isVisible;
     private String contact;
+    private float latitude;
+    private float longitude;
+
+    public int getFood() {
+        return food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public int getVisibilityRange() {
+        return visibilityRange;
+    }
+
+    public void setVisibilityRange(int visibilityRange) {
+        this.visibilityRange = visibilityRange;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
 
     public int getFoodId() {
         return food;
