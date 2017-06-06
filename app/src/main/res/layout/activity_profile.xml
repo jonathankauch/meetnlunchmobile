@@ -38,10 +38,38 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/avatar" />
 
-            <ListView
-                android:id="@+id/avatar_list"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/switch_left"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/action_back"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_gravity="center"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/profile0"
+                    />
+
+                <Button
+                    android:id="@+id/switch_right"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/right"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
