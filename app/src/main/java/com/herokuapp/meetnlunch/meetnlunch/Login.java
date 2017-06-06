@@ -253,7 +253,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         }
 
         Ion.with(getApplicationContext())
-                .load("https://meetnlunchapp.herokuapp.com/app_dev.php/api/login?client_id=6_1qo0nbo7qwu84kc0ow0sc8wsgwgwo484ck040s0w8ck0ckcsok&client_secret=26ax9kvwtbusgcskgkocosoc844k0g404wo8kg40sgg808kwc4")
+                .load("https://meetnlunchapp.herokuapp.com/api/login?client_id=6_1qo0nbo7qwu84kc0ow0sc8wsgwgwo484ck040s0w8ck0ckcsok&client_secret=26ax9kvwtbusgcskgkocosoc844k0g404wo8kg40sgg808kwc4")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {

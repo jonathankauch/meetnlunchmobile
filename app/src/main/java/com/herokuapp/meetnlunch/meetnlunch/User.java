@@ -8,10 +8,10 @@ public class User {
     private String name;
     private String email;
     private int id;
-    private int foodId;
+    private int food;
     private int wantedAge;
     private String wantedGender;
-    private int range;
+    private int visibilityRange;
     private int age;
     private int visibleAge;
     private String gender;
@@ -24,11 +24,11 @@ public class User {
     private String contact;
 
     public int getFoodId() {
-        return foodId;
+        return food;
     }
 
     public void setFoodId(int foodId) {
-        this.foodId = foodId;
+        this.food = foodId;
     }
 
     public int getWantedAge() {
@@ -96,11 +96,11 @@ public class User {
     }
 
     public int getRange() {
-        return range;
+        return visibilityRange;
     }
 
     public void setRange(int range) {
-        this.range = range;
+        this.visibilityRange = range;
     }
 
     public String getDescription() {
@@ -158,4 +158,23 @@ public class User {
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
+
+    public int getWantedGenderId() {
+        if (wantedGender.contains("M")) {
+            return 0;
+        } else if (wantedGender.contains("F")) {
+            return 1;
+        }
+        return 2;
+    }
+
+    public int getVisibleGenderId() {
+        if (visibleGender.contains("M")) {
+            return 0;
+        } else if (visibleGender.contains("F")) {
+            return 1;
+        }
+        return 2;
+    }
+
 }
