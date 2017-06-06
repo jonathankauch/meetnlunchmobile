@@ -278,7 +278,7 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                                 Log.d("USER PARSED", "position : " + user.getPosition());
                                 Log.d("USER PARSED", "id : " + user.getId());
 
-                                Intent intent = new Intent(Login.this, Filter.class);
+                                Intent intent = new Intent(Login.this, Search.class);
                                 startActivity(intent);
                             }
                         } else {
