@@ -118,60 +118,42 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
                     .build();                   // Creates a CameraPosition from the builder
 //                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        }
 
-        final JsonObject json = new JsonObject();
-        json.addProperty("Authorization", "Bearer " + Singleton.getInstance().getToken());
-        json.addProperty("food_id", 1);
-        json.addProperty("wanted_age", 20);
-        json.addProperty("wanted_gender", "M");
-        json.addProperty("range", 5);
-        json.addProperty("visible_age", 25);
-        json.addProperty("visible_gender", "M");
-        json.addProperty("customer_id", 11);
-        json.addProperty("position", "" + location.getLatitude() + "," + location.getLongitude());
+            if (!isNetworkAvailable()) {
 
-        Log.d("JSON OBJECT", json.toString());
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+                return;
+            }
 
-        if (!isNetworkAvailable()) {
+            String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
+            url += "food=" + Singleton.getInstance().getmUser().getFoodId();
+            url += "&wanted_age=" + Singleton.getInstance().getmUser().getWantedAge();
+            url += "&wanted_gender=" + Singleton.getInstance().getmUser().getWantedGender();
+            url += "&range=" + Singleton.getInstance().getmUser().getRange();
+            url += "&visible_age=" + Singleton.getInstance().getmUser().getVisibleAge();
+            url += "&visible_gender=" + Singleton.getInstance().getmUser().getVisibleGender();
+            url += "&customer_id=" + Singleton.getInstance().getmUser().getId();
+            url += "&latitude=" + location.getLatitude() + "&longitude=" + location.getLongitude();
 
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
-            return;
-        }
+            Log.d("URL", url);
+            BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
 
-        String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
-        url += "food_id=" + Singleton.getInstance().getmUser().getFoodId();
-        url += "&wanted_age=" + Singleton.getInstance().getmUser().getWantedAge();
-        url += "&wanted_gender=" + Singleton.getInstance().getmUser().getWantedGender();
-        url += "&range=" + Singleton.getInstance().getmUser().getRange();
-        url += "&visible_age=" + Singleton.getInstance().getmUser().getVisibleAge();
-        url += "&visible_gender=" + Singleton.getInstance().getmUser().getVisibleGender();
-        url += "&customer_id=" + Singleton.getInstance().getmUser().getId();
-        url += "&position=\"" + location.getLatitude() + "," + location.getLongitude() + "\"";
-
-        Log.d("URL", url);
-        BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
-
-        Ion.with(getApplicationContext())
-                .load(url)
-                .setHeader(tokenPair)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        if (e != null || result == null) {
-                            Log.d("ERROR RESPONSE", e.toString());
-                            return;
+            Ion.with(getApplicationContext())
+                    .load(url)
+                    .setHeader(tokenPair)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            if (e != null || result == null) {
+                                Log.d("ERROR RESPONSE", e.toString());
+                                return;
+                            }
+                            Log.d("API RESPONSE", result.toString());
                         }
-                        Log.d("API RESPONSE", result.toString());
-                    }
-                });
+                    });
 
-
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        }
     }
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {

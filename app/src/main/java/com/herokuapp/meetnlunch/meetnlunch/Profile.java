@@ -128,7 +128,7 @@ public class Profile extends AppCompatActivity {
     }
 
     public void getAvatar() {
-        avatar = (ImageView) findViewById(R.id.avatar_image);
+//        avatar = (ImageView) findViewById(R.id.avatar_image);
     }
 
     public void getDescription() {
