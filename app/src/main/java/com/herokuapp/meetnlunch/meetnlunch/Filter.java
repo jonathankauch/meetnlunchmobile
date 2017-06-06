@@ -1,17 +1,28 @@
 package com.herokuapp.meetnlunch.meetnlunch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 public class Filter extends AppCompatActivity {
 
@@ -133,28 +144,63 @@ public class Filter extends AppCompatActivity {
                 getAgeVisibility();
                 getFilteredGender();
                 getVisibilityGender();
+                final JsonObject json = new JsonObject();
+                json.addProperty("age", getFilteredAge().toString());
+
+                if (!isNetworkAvailable()) {
+
+                    Toast.makeText(Filter.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Ion.with(getApplicationContext())
+                        .load(getString(R.string.api_url) + "forgot/reset")
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                if (e != null || result == null) {
+                                    Log.d("ERROR RESPONSE", e.getMessage());
+                                    return;
+                                }
+                                Log.d("API RESPONSE", result.toString());
+                            }
+                        });
             }
         });
-    }
+            }
 
-    public void getFilteredAge() {
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+        = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+
+    public SeekBar getFilteredAge() {
         SeekBar ageBar = (SeekBar) findViewById(R.id.filter_age);
         filteredAge = ageBar.getProgress();
+        return ageBar;
     }
 
-    public void getFilteredDistance() {
+    public SeekBar getFilteredDistance() {
         SeekBar distanceBar = (SeekBar) findViewById(R.id.filter_range);
         filteredDistance = distanceBar.getProgress();
+        return distanceBar;
     }
 
-    public void getFilteredFoodType() {
+    public Spinner getFilteredFoodType() {
         Spinner foodBar = (Spinner) findViewById(R.id.filter_food);
         filteredFoodType = foodBar.getSelectedItemPosition();
+        return foodBar;
     }
 
-    public void getAgeVisibility() {
+    public SeekBar getAgeVisibility() {
         SeekBar ageBar = (SeekBar) findViewById(R.id.filter_age_visibility);
         visibilityAge = ageBar.getProgress();
+        return ageBar;
     }
 
     public void getFilteredGender() {
