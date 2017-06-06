@@ -140,13 +140,13 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         }
 
         String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
-        url += "food_id=1";
-        url += "&wanted_age=20";
-        url += "&wanted_gender=\"M\"";
-        url += "&range=5";
-        url += "&visible_age=25";
-        url += "&visible_gender=\"M\"";
-        url += "&customer_id=11";
+        url += "food_id=" + Singleton.getInstance().getmUser().getFoodId();
+        url += "&wanted_age=" + Singleton.getInstance().getmUser().getWantedAge();
+        url += "&wanted_gender=" + Singleton.getInstance().getmUser().getWantedGender();
+        url += "&range=" + Singleton.getInstance().getmUser().getRange();
+        url += "&visible_age=" + Singleton.getInstance().getmUser().getVisibleAge();
+        url += "&visible_gender=" + Singleton.getInstance().getmUser().getVisibleGender();
+        url += "&customer_id=" + Singleton.getInstance().getmUser().getId();
         url += "&position=\"" + location.getLatitude() + "," + location.getLongitude() + "\"";
 
         Log.d("URL", url);
