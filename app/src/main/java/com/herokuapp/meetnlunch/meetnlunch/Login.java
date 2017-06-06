@@ -261,15 +261,26 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                     public void onCompleted(Exception e, JsonObject result) {
                         showProgress(false);
                         if (e != null || result == null) {
-                            Log.d("ERROR RESPONSE", e.getMessage());
+                            Log.d("ERROR RESPONSE", e.toString());
                             return;
                         }
                         Log.d("API RESPONSE", result.toString());
-                        JsonElement token = result.get("access_token");
-                        if (token != null) {
-                            Singleton.getInstance().setToken(token.getAsString());
-                            Intent intent = new Intent(Login.this, Search.class);
-                            startActivity(intent);
+                        JsonObject token = result.getAsJsonObject("token");
+                        if (token != null && token.get("access_token") != null) {
+                            Singleton.getInstance().setToken(token.get("access_token").getAsString());
+
+                            JsonElement jsonUser = result.get("user");
+                            User user = new Gson().fromJson(jsonUser, User.class);
+
+                            if (user != null) {
+
+                                Singleton.getInstance().setmUser(user);
+                                Log.d("USER PARSED", "position : " + user.getPosition());
+                                Log.d("USER PARSED", "id : " + user.getId());
+
+                                Intent intent = new Intent(Login.this, Search.class);
+                                startActivity(intent);
+                            }
                         } else {
                             Toast.makeText(Login.this, "Bad credentials", Toast.LENGTH_LONG).show();
                         }

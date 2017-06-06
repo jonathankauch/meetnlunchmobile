@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.async.http.BasicNameValuePair;
 import com.koushikdutta.ion.Ion;
 
 public class Search extends FragmentActivity implements OnMapReadyCallback {
@@ -120,14 +121,14 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         }
 
         final JsonObject json = new JsonObject();
-        json.addProperty("Authorization", "Bearer[" + Singleton.getInstance().getToken() + "]");
+        json.addProperty("Authorization", "Bearer " + Singleton.getInstance().getToken());
         json.addProperty("food_id", 1);
         json.addProperty("wanted_age", 20);
         json.addProperty("wanted_gender", "M");
         json.addProperty("range", 5);
         json.addProperty("visible_age", 25);
         json.addProperty("visible_gender", "M");
-        json.addProperty("customer_id", 1);
+        json.addProperty("customer_id", 11);
         json.addProperty("position", "" + location.getLatitude() + "," + location.getLongitude());
 
         Log.d("JSON OBJECT", json.toString());
@@ -138,15 +139,28 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
             return;
         }
 
+        String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
+        url += "food_id=1";
+        url += "&wanted_age=20";
+        url += "&wanted_gender=\"M\"";
+        url += "&range=5";
+        url += "&visible_age=25";
+        url += "&visible_gender=\"M\"";
+        url += "&customer_id=11";
+        url += "&position=\"" + location.getLatitude() + "," + location.getLongitude() + "\"";
+
+        Log.d("URL", url);
+        BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
+
         Ion.with(getApplicationContext())
-                .load(getString(R.string.api_url) + "filter")
-                .setJsonObjectBody(json)
+                .load(url)
+                .setHeader(tokenPair)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         if (e != null || result == null) {
-                            Log.d("ERROR RESPONSE", e.getMessage());
+                            Log.d("ERROR RESPONSE", e.toString());
                             return;
                         }
                         Log.d("API RESPONSE", result.toString());
