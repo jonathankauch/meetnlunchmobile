@@ -195,7 +195,7 @@ public class Filter extends AppCompatActivity {
                 BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
 
                 Ion.with(getApplicationContext())
-                        .load("PUT", getString(R.string.api_url) + "users/" + Singleton.getInstance().getmUser().getId())
+                        .load("PUT", "https://meetnlunchapp.herokuapp.com/app_dev.php/api/"+ "users/" + Singleton.getInstance().getmUser().getId())
                         .setHeader(tokenPair)
                         .setJsonObjectBody(json)
                         .asJsonObject()
