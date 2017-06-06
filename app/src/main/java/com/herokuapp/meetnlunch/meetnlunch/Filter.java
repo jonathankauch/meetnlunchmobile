@@ -1,19 +1,29 @@
 package com.herokuapp.meetnlunch.meetnlunch;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -24,11 +34,11 @@ import com.koushikdutta.ion.Ion;
 
 public class Filter extends AppCompatActivity {
 
-    static int filteredAge = 0;
-    static int filteredDistance = 0;
+    static int filteredAge = 18;
+    static int filteredDistance = 1;
     static int filteredFoodType = 0;
     static int filteredGender = 0;
-    static int visibilityAge = 0;
+    static int visibilityAge = 18;
     static int visibilityGender = 0;
     static int genderID = 0;
     static int genderVisibilityID = 0;
@@ -172,7 +182,6 @@ public class Filter extends AppCompatActivity {
                 getFilteredGender();
                 getVisibilityGender();
 
-
                 final JsonObject json = new JsonObject();
                 json.addProperty("food", filteredFoodType);
                 json.addProperty("wantedAge", filteredAge);
@@ -212,26 +221,38 @@ public class Filter extends AppCompatActivity {
                         });
             }
         });
-    }
+}
 
-    public void getFilteredAge() {
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+        = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+
+    public SeekBar getFilteredAge() {
         SeekBar ageBar = (SeekBar) findViewById(R.id.filter_age);
         filteredAge = ageBar.getProgress();
+        return ageBar;
     }
 
-    public void getFilteredDistance() {
+    public SeekBar getFilteredDistance() {
         SeekBar distanceBar = (SeekBar) findViewById(R.id.filter_range);
         filteredDistance = distanceBar.getProgress();
+        return distanceBar;
     }
 
-    public void getFilteredFoodType() {
+    public Spinner getFilteredFoodType() {
         Spinner foodBar = (Spinner) findViewById(R.id.filter_food);
         filteredFoodType = foodBar.getSelectedItemPosition() + 1;
+        return foodBar;
     }
 
-    public void getAgeVisibility() {
+    public SeekBar getAgeVisibility() {
         SeekBar ageBar = (SeekBar) findViewById(R.id.filter_age_visibility);
         visibilityAge = ageBar.getProgress();
+        return ageBar;
     }
 
     public void getFilteredGender() {

@@ -38,14 +38,66 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/avatar" />
 
-            <ImageView
-                android:id="@+id/avatar_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
-                android:layout_weight="0.18"
-                android:src="@drawable/ic_action_profile" />
+            <ListView
+                android:id="@+id/avatar_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/avatar_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/ic_action_profile" />
+
+                <ImageView
+                    android:id="@+id/Profil0"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/profile0" />
+
+                <ImageView
+                    android:id="@+id/Profil1"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/profile1" />
+
+                <ImageView
+                    android:id="@+id/Profil2"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/profile2" />
+
+                <ImageView
+                    android:id="@+id/Profil3"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/profile3" />
+
+                <ImageView
+                    android:id="@+id/Profil4"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:layout_weight="0.18"
+                    android:src="@drawable/profile4" />
+
+            </ListView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,18 +107,6 @@
 
             <Switch
                 android:id="@+id/event_on"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/show_gender_info" />
-
-            <Switch
-                android:id="@+id/show_gender"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp" />
