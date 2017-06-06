@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +24,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +37,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.plus.Plus;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.BasicNameValuePair;
@@ -41,10 +47,13 @@ import com.koushikdutta.ion.Ion;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Search extends FragmentActivity implements OnMapReadyCallback {
+public class Search extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
-    private boolean isDone;
+    private boolean isReady = false;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private LocationListener mLocationListener;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -108,81 +117,115 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
 
         mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
 
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        final Criteria criteria = new Criteria();
+        mLocationListener = new LocationListener() {
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+            private boolean isNetworkAvailable() {
+                ConnectivityManager connectivityManager
+                        = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+            }
+
             @Override
-            public void run() {
-                if (!isDone) {
-                    if (ActivityCompat.checkSelfPermission(Search.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Search.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
+            public void onLocationChanged(final Location location) {
+                if (!isReady) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
-                    final Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-                    if (location != null)
-                    {
-                        isDone = true;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
-
-                                mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Jonathana, 22 years old, F").snippet("Korean Restaurant"));
-                                CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-                                        .zoom(16)                   // Sets the zoom
-                                        .build();                   // Creates a CameraPosition from the builder
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Jonathana, 22 years old, F").snippet("Korean Restaurant"));
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                            .zoom(16)                   // Sets the zoom
+                            .build();                   // Creates a CameraPosition from the builder
 //                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    isReady = true;
+                }
+                if (!isNetworkAvailable()) {
+
+                    Toast.makeText(Search.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
+                url += "food=" + Singleton.getInstance().getmUser().getFoodId();
+                url += "&wanted_age=" + Singleton.getInstance().getmUser().getWantedAge();
+                url += "&wanted_gender=" + Singleton.getInstance().getmUser().getWantedGender();
+                url += "&range=" + Singleton.getInstance().getmUser().getRange();
+                url += "&visible_age=" + Singleton.getInstance().getmUser().getVisibleAge();
+                url += "&visible_gender=" + Singleton.getInstance().getmUser().getVisibleGender();
+                url += "&customer_id=" + Singleton.getInstance().getmUser().getId();
+                url += "&latitude=" + location.getLatitude() + "&longitude=" + location.getLongitude();
+
+                Log.d("URL", url);
+                BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
+
+                Ion.with(getApplicationContext())
+                        .load(url)
+                        .setHeader(tokenPair)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                if (e != null || result == null) {
+                                    Log.d("ERROR RESPONSE", e.toString());
+                                    return;
+                                }
+                                Log.d("API RESPONSE", result.toString());
                             }
                         });
 
-                        if (!isNetworkAvailable()) {
-
-                            Toast.makeText(Search.this, "No internet connection", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        String url = "https://meetnlunchapp.herokuapp.com/app_dev.php/api/filter?";
-                        url += "food=" + Singleton.getInstance().getmUser().getFoodId();
-                        url += "&wanted_age=" + Singleton.getInstance().getmUser().getWantedAge();
-                        url += "&wanted_gender=" + Singleton.getInstance().getmUser().getWantedGender();
-                        url += "&range=" + Singleton.getInstance().getmUser().getRange();
-                        url += "&visible_age=" + Singleton.getInstance().getmUser().getVisibleAge();
-                        url += "&visible_gender=" + Singleton.getInstance().getmUser().getVisibleGender();
-                        url += "&customer_id=" + Singleton.getInstance().getmUser().getId();
-                        url += "&latitude=" + location.getLatitude() + "&longitude=" + location.getLongitude();
-
-                        Log.d("URL", url);
-                        BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
-
-                        Ion.with(getApplicationContext())
-                                .load(url)
-                                .setHeader(tokenPair)
-                                .asJsonObject()
-                                .setCallback(new FutureCallback<JsonObject>() {
-                                    @Override
-                                    public void onCompleted(Exception e, JsonObject result) {
-                                        if (e != null || result == null) {
-                                            Log.d("ERROR RESPONSE", e.toString());
-                                            return;
-                                        }
-                                        Log.d("API RESPONSE", result.toString());
-                                    }
-                                });
-
-                    }
-                }
             }
-        }, 0, 10000);//put here time 1000 milliseconds=1 second
+        };
+
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(100);
+        mLocationRequest.setFastestInterval(100);
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        mGoogleApiClient.connect();
+        Criteria criteria = new Criteria();
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (mGoogleApiClient.isConnected()) {
+            startLocationUpdates();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        Log.d("LOCATION UPDATE", "Loc changed started");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mLocationListener);
+//            LocationServices.FusedLocationApi.requestLocationUpdates(
+//                mMap, mMap.getMyLocation(), this);
+    }
+
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
@@ -212,13 +255,5 @@ public class Search extends FragmentActivity implements OnMapReadyCallback {
         }
 
     }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
 
 }
