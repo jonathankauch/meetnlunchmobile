@@ -31,6 +31,7 @@ public class Profile extends AppCompatActivity {
     static boolean showGender = true;
     static boolean showAge = true;
     static ImageView avatar = null;
+    static int ProfilePic = 0;
     static String description = "";
     static String contact = "";
 
@@ -120,6 +121,32 @@ public class Profile extends AppCompatActivity {
 
                             }
                         });
+            }
+        });
+
+        Button switchRight = (Button) findViewById(R.id.switch_right);
+        switchRight.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (ProfilePic < 4) {
+                    ++ProfilePic;
+                    String pic = "profile"+ProfilePic;
+                    ((ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
+                }
+            }
+        });
+
+        Button switchLeft = (Button) findViewById(R.id.switch_left);
+        switchLeft.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (ProfilePic > 0) {
+                    --ProfilePic;
+                    String pic = "profile"+ProfilePic;
+                    ((ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
+                }
             }
         });
     }

@@ -29,6 +29,8 @@
     <string name="age_max">99+</string>
     <string name="distance_min">1</string>
     <string name="distance_max">10</string>
+    <string name="right"> NEXT </string>
+    <string name="left"> BACK </string>
 
     <string name="action_sign_in">Connexion</string>
     <string name="action_sign_up">Register</string>
