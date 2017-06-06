@@ -32,6 +32,7 @@ public class Profile extends AppCompatActivity {
     static boolean showAge = true;
     static ImageView avatar = null;
     static int ProfilePic = 0;
+    String pic = "profile0";
     static String description = "";
     static String contact = "";
 
@@ -69,6 +70,7 @@ public class Profile extends AppCompatActivity {
         ((Switch) findViewById(R.id.show_age)).setChecked(showAge);
         ((EditText) findViewById(R.id.description_field)).setText(description);
         ((EditText) findViewById(R.id.contact_field)).setText(contact);
+        ((ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
 
 
         Button save = (Button) findViewById(R.id.save_change_button);
@@ -131,8 +133,8 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 if (ProfilePic < 4) {
                     ++ProfilePic;
-                    String pic = "profile"+ProfilePic;
-                    ((ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
+                    pic = "profile"+ProfilePic;
+                    (avatar = (ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
                 }
             }
         });
@@ -144,8 +146,8 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 if (ProfilePic > 0) {
                     --ProfilePic;
-                    String pic = "profile"+ProfilePic;
-                    ((ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
+                    pic = "profile"+ProfilePic;
+                    (avatar = (ImageView) findViewById(R.id.avatar)).setImageResource(getResources().getIdentifier(pic, "drawable", getPackageName()));
                 }
             }
         });
