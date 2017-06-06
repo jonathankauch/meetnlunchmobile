@@ -26,11 +26,11 @@ import com.koushikdutta.ion.Ion;
 
 public class Filter extends AppCompatActivity {
 
-    static int filteredAge = 0;
-    static int filteredDistance = 0;
+    static int filteredAge = 18;
+    static int filteredDistance = 1;
     static int filteredFoodType = 0;
     static int filteredGender = 0;
-    static int visibilityAge = 0;
+    static int visibilityAge = 18;
     static int visibilityGender = 0;
     static int genderID = 0;
     static int genderVisibilityID = 0;
