@@ -59,6 +59,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
     private LocationRequest mLocationRequest;
     private LocationListener mLocationListener;
     private ArrayList<Integer> existingIds;
+    private String[] foodArray = {"Korean", "Mexican", "Japanese", "Chinese", "French", "Vietnamese", "Italian", "Spanish", "Seafood"};
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -197,7 +198,9 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
 
                                             String title = name + ", " + age + " years old" + ", " + gender;
 
-                                            mMap.addMarker(new MarkerOptions().position(new LatLng(users[i].getLatitude(), users[i].getLongitude())).title(title).snippet("Korean Restaurant"));
+                                            mMap.addMarker(new MarkerOptions().position(new LatLng(users[i].getLatitude(),
+                                                    users[i].getLongitude())).title(title).snippet("Looking for : " + foodArray[users[i].getFoodId()]
+                                                    + " Restaurant\n" + "Description : " + users[i].getDescription() + "\nContact : " + users[i].getContact()));
                                         }
                                     }
                                 }
