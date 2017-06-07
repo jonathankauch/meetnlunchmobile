@@ -5,7 +5,7 @@ package com.herokuapp.meetnlunch.meetnlunch;
  * Created by Shirco on 24/02/2016.
  */
 public class User {
-    private String name;
+    private String username;
     private String email;
     private int id;
     private int food;
@@ -106,11 +106,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getEmail() {
