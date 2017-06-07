@@ -186,6 +186,8 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                                 JsonElement jsonCustomers = result.get("customers");
                                 try {
                                     User[] users = new Gson().fromJson(jsonCustomers, User[].class);
+                                    if (users == null)
+                                        return;
                                     for (int i = 0; i < users.length; i++) {
                                         if (users[i].getLatitude() != 0) {
                                             if (!checkIfExist(users[i].getId())) {

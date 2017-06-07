@@ -33,7 +33,7 @@ public class Profile extends AppCompatActivity {
     static boolean showAge = true;
     static ImageView avatar = null;
     static int ProfilePicID = 0;
-    String pic = "profile0";
+    static String pic = "profile0";
     static String description = "";
     static String contact = "";
 
@@ -78,6 +78,53 @@ public class Profile extends AppCompatActivity {
 
         Button save = (Button) findViewById(R.id.save_change_button);
         save.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View mLoginFormView) {
+                final JsonObject json = new JsonObject();
+                json.addProperty("position", 0);
+
+                if (!isNetworkAvailable()) {
+
+                    Toast.makeText(Profile.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
+
+
+                Ion.with(getApplicationContext())
+                        .load("PUT", getString(R.string.api_url) + "users/" + Singleton.getInstance().getmUser().getId())
+                        .setHeader(tokenPair)
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                if (e != null || result == null) {
+                                    Log.d("ERROR RESPONSE", e.toString());
+                                    return;
+                                }
+
+                                Log.d("API RESPONSE", result.toString());
+
+                                JsonElement jsonUser = result.get("user");
+                                User user = new Gson().fromJson(jsonUser, User.class);
+
+                                if (user != null) {
+
+                                    Singleton.getInstance().setmUser(user);
+                                }
+                                Intent iLogin = new Intent(Profile.this, Login.class);
+                                startActivity(iLogin);
+                            }
+                        });
+            }
+        });
+
+
+        Button logout = (Button) findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View mLoginFormView) {
