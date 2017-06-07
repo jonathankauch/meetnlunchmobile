@@ -10,7 +10,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="287dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_weight="0.10">
@@ -30,7 +30,26 @@
                 android:layout_marginTop="7dp"
                 android:text="@string/action_menu_profile"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/name_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                />
+
+            <TextView
+                android:id="@+id/gender_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,6 +73,7 @@
 
                 <ImageView
                     android:id="@+id/avatar"
+                    android:contentDescription="@string/description_image"
                     android:layout_gravity="center"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
