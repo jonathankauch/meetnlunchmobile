@@ -3,25 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     tools:context="com.herokuapp.meetnlunch.meetnlunch.Search">
 
     <ImageView
         android:id="@+id/avatar_pic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginRight="5dp"
         android:adjustViewBounds="true"
+        android:layout_gravity="center_vertical"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:padding="8dp"
-        android:gravity="center_vertical"
-        android:foregroundGravity="center_vertical"
-        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
@@ -29,15 +27,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bar, 22, F,"
-            android:layout_gravity="center_vertical"
             android:textSize="12dp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/snippet"
-            android:text="Korean restaurant"
+            android:text="Korean restaurant\nTest\nTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:textSize="10dp"/>
 
     </LinearLayout>
