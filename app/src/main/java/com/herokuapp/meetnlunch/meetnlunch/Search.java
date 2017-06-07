@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
     private LocationListener mLocationListener;
     private ArrayList<Integer> existingIds;
     private String[] foodArray = {"Korean", "Mexican", "Japanese", "Chinese", "French", "Vietnamese", "Italian", "Spanish", "Seafood"};
+    private MyInfoWindowAdapter myWIndowAdapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -122,7 +124,8 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
         }
         mMap.setMyLocationEnabled(true);
 
-        mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+        myWIndowAdapter = new MyInfoWindowAdapter();
+        mMap.setInfoWindowAdapter(myWIndowAdapter);
 
         mLocationListener = new LocationListener() {
 
@@ -195,6 +198,10 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                                             if (users[i].getGender() != null) {
                                                 gender = users[i].getGender();
                                             }
+
+                                            myWIndowAdapter.ChangeAvatar(users[i].getAvatar());
+                                            mMap.setInfoWindowAdapter(myWIndowAdapter);
+
 
                                             String title = name + ", " + age + " years old" + ", " + gender;
 
@@ -277,6 +284,11 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private final View myContentsView;
+
+        public void ChangeAvatar(int id) {
+            if (id >= 0 && id <= 4)
+                ((ImageView) myContentsView.findViewById(R.id.avatar_pic)).setImageResource(getResources().getIdentifier("profile" + id, "drawable", getPackageName()));
+        }
 
         MyInfoWindowAdapter(){
             myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);

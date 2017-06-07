@@ -8,11 +8,12 @@
     tools:context="com.herokuapp.meetnlunch.meetnlunch.Search">
 
     <ImageView
+        android:id="@+id/avatar_pic"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginRight="5dp"
         android:adjustViewBounds="true"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:layout_width="wrap_content"
