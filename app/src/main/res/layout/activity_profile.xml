@@ -30,7 +30,36 @@
                 android:layout_marginTop="7dp"
                 android:text="@string/action_menu_profile"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/name_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="40dp"
+                />
+
+            <TextView
+                android:id="@+id/gender_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                />
+
+            <TextView
+                android:id="@+id/old_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_marginBottom="20dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

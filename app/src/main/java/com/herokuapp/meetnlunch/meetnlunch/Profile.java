@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -66,6 +67,9 @@ public class Profile extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        ((TextView) findViewById(R.id.name_user)).setText(Singleton.getInstance().getmUser().getName());
+        ((TextView) findViewById(R.id.gender_user)).setText(Singleton.getInstance().getmUser().getGender());
+        //((TextView) findViewById(R.id.old_user)).setText(Singleton.getInstance().getmUser().getAge());
         ((Switch) findViewById(R.id.event_on)).setChecked(event);
         ((Switch) findViewById(R.id.show_age)).setChecked(showAge);
         ((EditText) findViewById(R.id.description_field)).setText(description);
