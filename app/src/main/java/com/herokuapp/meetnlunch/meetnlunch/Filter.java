@@ -73,7 +73,7 @@ public class Filter extends AppCompatActivity {
 
         filteredAge = Singleton.getInstance().getmUser().getWantedAge();
         filteredDistance = Singleton.getInstance().getmUser().getRange();
-        filteredFoodType = Singleton.getInstance().getmUser().getFoodId() - 1;
+        filteredFoodType = Singleton.getInstance().getmUser().getFoodId();
         visibilityAge = Singleton.getInstance().getmUser().getVisibleAge();
 
         switch (Singleton.getInstance().getmUser().getVisibleGenderId()) {
@@ -245,7 +245,7 @@ public class Filter extends AppCompatActivity {
 
     public Spinner getFilteredFoodType() {
         Spinner foodBar = (Spinner) findViewById(R.id.filter_food);
-        filteredFoodType = foodBar.getSelectedItemPosition() + 1;
+        filteredFoodType = foodBar.getSelectedItemPosition();
         return foodBar;
     }
 
