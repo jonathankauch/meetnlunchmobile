@@ -43,6 +43,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.BasicNameValuePair;
 import com.koushikdutta.ion.Ion;
@@ -170,7 +171,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                 BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
 
                 Ion.with(getApplicationContext())
-                        .load(url2)
+                        .load(url)
                         .setHeader(tokenPair)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
@@ -183,33 +184,36 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                                 Log.d("API RESPONSE", result.toString());
 
                                 JsonElement jsonCustomers = result.get("customers");
-                                User[] users = new Gson().fromJson(jsonCustomers, User[].class);
-                                for (int i = 0; i < users.length; i++) {
-                                    if (users[i].getLatitude() != 0) {
-                                        if (!checkIfExist(users[i].getId())) {
-                                            String name = "";
-                                            if (users[i].getName() != null) {
-                                                name = users[i].getName();
+                                try {
+                                    User[] users = new Gson().fromJson(jsonCustomers, User[].class);
+                                    for (int i = 0; i < users.length; i++) {
+                                        if (users[i].getLatitude() != 0) {
+                                            if (!checkIfExist(users[i].getId())) {
+                                                String name = "";
+                                                if (users[i].getName() != null) {
+                                                    name = users[i].getName();
+                                                }
+
+                                                int age = users[i].getAge();
+
+                                                String gender = "";
+                                                if (users[i].getGender() != null) {
+                                                    gender = users[i].getGender();
+                                                }
+
+                                                myWIndowAdapter.ChangeAvatar(users[i].getAvatar());
+                                                mMap.setInfoWindowAdapter(myWIndowAdapter);
+
+
+                                                String title = name + ", " + age + " years old" + ", " + gender;
+
+                                                mMap.addMarker(new MarkerOptions().position(new LatLng(users[i].getLatitude(),
+                                                        users[i].getLongitude())).title(title).snippet("Looking for : " + foodArray[users[i].getFoodId()]
+                                                        + " Restaurant\n" + "Description : " + users[i].getDescription() + "\nContact : " + users[i].getContact()));
                                             }
-
-                                            int age = users[i].getAge();
-
-                                            String gender = "";
-                                            if (users[i].getGender() != null) {
-                                                gender = users[i].getGender();
-                                            }
-
-                                            myWIndowAdapter.ChangeAvatar(users[i].getAvatar());
-                                            mMap.setInfoWindowAdapter(myWIndowAdapter);
-
-
-                                            String title = name + ", " + age + " years old" + ", " + gender;
-
-                                            mMap.addMarker(new MarkerOptions().position(new LatLng(users[i].getLatitude(),
-                                                    users[i].getLongitude())).title(title).snippet("Looking for : " + foodArray[users[i].getFoodId()]
-                                                    + " Restaurant\n" + "Description : " + users[i].getDescription() + "\nContact : " + users[i].getContact()));
                                         }
                                     }
+                                } catch (JsonSyntaxException err) {
                                 }
                             }
                         });
