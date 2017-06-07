@@ -115,8 +115,6 @@ public class Profile extends AppCompatActivity {
 
                                     Singleton.getInstance().setmUser(user);
                                 }
-                                Intent iLogin = new Intent(Profile.this, Login.class);
-                                startActivity(iLogin);
                             }
                         });
             }
@@ -171,7 +169,8 @@ public class Profile extends AppCompatActivity {
 
                                     Singleton.getInstance().setmUser(user);
                                 }
-
+                                Intent iLogin = new Intent(Profile.this, Login.class);
+                                startActivity(iLogin);
                             }
                         });
             }
