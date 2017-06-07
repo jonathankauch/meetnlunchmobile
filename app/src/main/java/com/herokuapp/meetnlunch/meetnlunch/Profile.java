@@ -68,8 +68,7 @@ public class Profile extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         ((TextView) findViewById(R.id.name_user)).setText(Singleton.getInstance().getmUser().getName());
-        ((TextView) findViewById(R.id.gender_user)).setText(Singleton.getInstance().getmUser().getGender());
-        //((TextView) findViewById(R.id.old_user)).setText(Singleton.getInstance().getmUser().getAge());
+        ((TextView) findViewById(R.id.gender_user)).setText(Singleton.getInstance().getmUser().getGender() + " - " + Singleton.getInstance().getmUser().getAge());
         ((Switch) findViewById(R.id.event_on)).setChecked(event);
         ((Switch) findViewById(R.id.show_age)).setChecked(showAge);
         ((EditText) findViewById(R.id.description_field)).setText(description);

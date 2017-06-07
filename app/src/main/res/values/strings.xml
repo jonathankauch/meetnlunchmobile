@@ -31,6 +31,7 @@
     <string name="distance_max">10</string>
     <string name="right"> NEXT </string>
     <string name="left"> BACK </string>
+    <string name="description_image">Profile picture</string>
 
     <string name="action_sign_in">Connexion</string>
     <string name="action_sign_up">Register</string>
