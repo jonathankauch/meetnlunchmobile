@@ -171,7 +171,7 @@ public class Search extends FragmentActivity implements OnMapReadyCallback, Goog
                 BasicNameValuePair tokenPair = new BasicNameValuePair("Authorization", "Bearer " + Singleton.getInstance().getToken());
 
                 Ion.with(getApplicationContext())
-                        .load(url)
+                        .load(url2)
                         .setHeader(tokenPair)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
